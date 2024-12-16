@@ -1,0 +1,259 @@
+about:
+  date: December 16, 2024 19:24:30
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 7
+  number_tables: 10
+info_toggle_checked: true
+resources:
+  Appointment:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: car_id
+    - name: appointment_date
+      type: DATE
+    description: Represents an appointment for car service.
+    info_list: Represents an appointment for car service.
+    tab_groups:
+    - direction: toone
+      fks:
+      - car_id
+      name: car
+      resource: Car
+    type: Appointment
+    user_key: id
+  Car:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: owner_id
+    - name: model
+    - name: make
+    - name: year
+    - name: registration_number
+    - name: service_count
+    description: Represents a car.
+    info_list: Represents a car.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - car_id
+      name: AppointmentList
+      resource: Appointment
+    - direction: tomany
+      fks:
+      - car_id
+      name: ServiceList
+      resource: Service
+    - direction: toone
+      fks:
+      - owner_id
+      name: owner
+      resource: Owner
+    type: Car
+    user_key: id
+  Employee:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: garage_id
+    - name: role
+    - name: id
+    description: Represents a garage employee.
+    info_list: Represents a garage employee.
+    tab_groups:
+    - direction: toone
+      fks:
+      - garage_id
+      name: garage
+      resource: Garage
+    type: Employee
+    user_key: name
+  Garage:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: location
+    - name: capacity
+    - name: car_count
+    - name: employee_count
+    - name: id
+    description: Represents a car garage.
+    info_list: Represents a car garage.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - garage_id
+      name: EmployeeList
+      resource: Employee
+    type: Garage
+    user_key: name
+  Invoice:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: service_id
+    - name: total_amount
+    - name: invoice_count
+    description: Represents an invoice for a car service.
+    info_list: Represents an invoice for a car service.
+    tab_groups:
+    - direction: toone
+      fks:
+      - service_id
+      name: service
+      resource: Service
+    type: Invoice
+    user_key: id
+  Owner:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: address
+    - name: contact_number
+    - name: car_count
+    - name: id
+    description: Represents a car owner.
+    info_list: Represents a car owner.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - owner_id
+      name: CarList
+      resource: Car
+    type: Owner
+    user_key: name
+  Part:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: price
+    - name: id
+    description: Represents a car part.
+    info_list: Represents a car part.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - part_id
+      name: RepairList
+      resource: Repair
+    type: Part
+    user_key: name
+  Repair:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: part_id
+    - name: service_id
+    - name: repair_date
+      type: DATE
+    - name: repair_cost_total
+    description: Represents a car repair record.
+    info_list: Represents a car repair record.
+    tab_groups:
+    - direction: toone
+      fks:
+      - part_id
+      name: part
+      resource: Part
+    - direction: toone
+      fks:
+      - service_id
+      name: service
+      resource: Service
+    type: Repair
+    user_key: id
+  Service:
+    attributes:
+    - label: ' description*'
+      name: description
+      search: true
+      sort: true
+    - name: car_id
+    - name: service_date
+      type: DATE
+    - name: repair_count
+    - name: id
+    description: Represents a car service record.
+    info_list: Represents a car service record.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - service_id
+      name: InvoiceList
+      resource: Invoice
+    - direction: tomany
+      fks:
+      - service_id
+      name: RepairList
+      resource: Repair
+    - direction: toone
+      fks:
+      - car_id
+      name: car
+      resource: Car
+    type: Service
+    user_key: description
+  Vendor:
+    attributes:
+    - label: ' name*'
+      name: name
+      search: true
+      sort: true
+    - name: contact_info
+    - name: id
+    description: Represents a vendor supplying car parts.
+    info_list: Represents a vendor supplying car parts.
+    type: Vendor
+    user_key: name
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

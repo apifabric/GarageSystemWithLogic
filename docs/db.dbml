@@ -1,0 +1,104 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+// Or, view in VSCode with extension: "DBML Live Preview"
+
+Project DBML {
+  Note: '''
+Appointment: Represents an appointment for car service.
+Car: Represents a car.
+Owner: Represents a car owner.
+Employee: Represents a garage employee.
+Garage: Represents a car garage.
+Invoice: Represents an invoice for a car service.
+Service: Represents a car service record.
+Part: Represents a car part.
+Repair: Represents a car repair record.
+Vendor: Represents a vendor supplying car parts.
+'''
+}
+
+Table Appointment {
+    id INTEGER [primary key]
+    car_id INTEGER 
+    appointment_date DATE 
+    }
+
+Table Car {
+    id INTEGER [primary key]
+    model VARCHAR 
+    make VARCHAR 
+    year INTEGER 
+    registration_number VARCHAR 
+    owner_id INTEGER 
+    service_count INTEGER 
+    }
+
+Table Owner {
+    id INTEGER [primary key]
+    name VARCHAR 
+    address VARCHAR 
+    contact_number VARCHAR 
+    car_count INTEGER 
+    }
+
+Table Employee {
+    id INTEGER [primary key]
+    name VARCHAR 
+    role VARCHAR 
+    garage_id INTEGER 
+    }
+
+Table Garage {
+    id INTEGER [primary key]
+    name VARCHAR 
+    location VARCHAR 
+    capacity INTEGER 
+    car_count INTEGER 
+    employee_count INTEGER 
+    }
+
+Table Invoice {
+    id INTEGER [primary key]
+    service_id INTEGER 
+    total_amount INTEGER 
+    invoice_count INTEGER 
+    }
+
+Table Service {
+    id INTEGER [primary key]
+    car_id INTEGER 
+    service_date DATE 
+    description VARCHAR 
+    repair_count INTEGER 
+    }
+
+Table Part {
+    id INTEGER [primary key]
+    name VARCHAR 
+    price INTEGER 
+    }
+
+Table Repair {
+    id INTEGER [primary key]
+    service_id INTEGER 
+    part_id INTEGER 
+    repair_date DATE 
+    repair_cost_total INTEGER 
+    }
+
+Table Vendor {
+    id INTEGER [primary key]
+    name VARCHAR 
+    contact_info VARCHAR 
+    }
+
+
+
+// Relationships
+    Ref: Appointment.(car_id) < Car.(id)
+    Ref: Car.(owner_id) < Owner.(id)
+    Ref: Employee.(garage_id) < Garage.(id)
+    Ref: Invoice.(service_id) < Service.(id)
+    Ref: Service.(car_id) < Car.(id)
+    Ref: Repair.(part_id) < Part.(id)
+    Ref: Repair.(service_id) < Service.(id)
